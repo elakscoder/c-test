@@ -18,9 +18,9 @@ void remov(char *str,int i,int len)
 {
     int j = 0;
 
-    for(j=i;str[j+len] != '\0';j++)
+    for(j=i;str[j+(len - i)] != '\0';j++)
     {
-        str[j] = str[j+len];
+        str[j] = str[j+(len - i)];
     }
 
     str[j] = '\0';
@@ -30,7 +30,7 @@ int check(char *str,char *rem,int i,int len)
 {
     int right = 0;
 
-    for(int j=i;j<i+len;j++)
+    for(int j=i;j<len;j++)
     {
         if(str[j] != rem[right++])
         {
@@ -43,15 +43,38 @@ int check(char *str,char *rem,int i,int len)
 
 void traverse(char *str,char *rem)
 {
-    int len = length(rem);
+    int len = length(str);
+    int r = 0;
+    int i = 0;
 
-    for(int i=0;str[i] != '\0';i++)
+    printf("i = %d\n",i);
+    printf("r = %d\n",r);
+    printf("len = %d\n",len);
+
+    while(str[r] != '\0')
     {
-        if(check(str,rem,i,len))
+        r = i;
+
+        while(str[r] != ' ' && str[r] != '\0')
         {
-            remov(str,i,len);
-            i--;
+            r++;
         }
+
+
+        printf("i = %d\n",i);
+       printf("r = %d\n",r);
+        printf("len = %d\n",len); 
+
+        if(check(str,rem,i,r))
+        {
+            remov(str,i,r);
+        }
+
+        if(r+1<len)
+        {
+            i = r+1;
+        }
+         
     }
 }
 
@@ -64,7 +87,7 @@ int main()
     scanf("%[^\n]",str);
 
     printf("Enter the string to remove: ");
-    scanf("%s",rem);
+    scanf(" %s",rem);
     
     traverse(str,rem);
 
