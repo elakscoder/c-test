@@ -13,35 +13,32 @@ int length(char *str)
 
     return cnt;
 }
-
+int mini(int a,int b,int c)
+{
+    if(a<b && a<c)
+    {
+        return a;
+    }
+    else if(b<a && b<c)
+    {
+        return b;
+    }
+    else
+    {
+        return c;
+    }
+}
 int count(char *str)
 {
-    int hash[3] = {0};
+    
     int len = length(str);
     int sum = 0;
+    int hash[3] = {-1,-1,-1};
 
-
-    int r = len - 1;
-    int l = len - 1;
-
-
-
-    while(l>=0)
+    for(int i=0;i<len;i++)
     {
-        hash[str[l]-'a']++;
-
-        while((r-l+1)>3)
-        {
-            hash[str[r]-'a']--;
-            r--;
-        }
-
-        if(hash[0] == 1 && hash[1] == 1 && hash[2] == 1)
-        {
-            sum = sum + l+1;
-        }
-        
-        l--;
+        hash[str[i]-'a'] = i;
+        sum += 1 + mini(hash[0],hash[1],hash[2]);
     }
 
     return sum;
