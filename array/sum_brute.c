@@ -23,6 +23,19 @@ void sort(int n, int arr[])
     }
 }
 
+int check(int arr[], int sum, int r)
+{
+    for (int i = 0; i < r; i++)
+    {
+        if (arr[i] == sum)
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 void print(int n, int target, int arr[])
 {
     sort(n, arr);
@@ -40,11 +53,12 @@ void print(int n, int target, int arr[])
                 {
                     if ((arr[i] + arr[j] + arr[k] + arr[l]) == target)
                     {
-                        mat[r][0] = arr[i];
-                        mat[r][1] = arr[j];
-                        mat[r][2] = arr[k];
-                        mat[r][3] = arr[l];
-                        r++;
+                        sum = (arr[i] * 1000) + (arr[j] * 100) + (arr[k] * 10) + (arr[l] * 1);
+                        if (check(arr, sum, r))
+                        {
+                            arr[r] = sum;
+                            r++;
+                        }
                     }
                 }
             }
@@ -53,10 +67,7 @@ void print(int n, int target, int arr[])
 
     for (int i = 0; i < r; i++)
     {
-        printf("%d ", mat[i][0]);
-        printf("%d ", mat[i][1]);
-        printf("%d ", mat[i][2]);
-        printf("%d \n", mat[i][3]);
+        printf("%04d\n", arr[i]);
     }
 }
 
@@ -79,11 +90,6 @@ int main()
     scanf("%d", &k);
 
     print(n, k, arr);
-
-    /* for (int i = 0; i < n; i++)
-    {
-        printf("%d", arr[i]);
-    } */
 
     return 0;
 }
